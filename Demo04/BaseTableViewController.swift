@@ -10,10 +10,12 @@ import UIKit
 import ESPullToRefresh
 
 class BaseTableViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
-    private var tableView: UITableView?
+    @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        addPullToRefresh()
+        addInfiniteScrolling()
     }
 
     override func didReceiveMemoryWarning() {
@@ -21,46 +23,46 @@ class BaseTableViewController: UIViewController, UITableViewDataSource, UITableV
         // Dispose of any resources that can be recreated.
     }
     
-    func addPullToRefresh(tableView: UITableView) {
-        let header = ESRefreshHeaderAnimator.init(frame: CGRect.zero)
-        tableView.es.addPullToRefresh(animator: header) { [weak self] in
-            guard let me = self else { return }
-            me.tableView = tableView
+    func addPullToRefresh() {
+        tableView.es.addPullToRefresh { [weak self] in
+            guard let me = self else {
+                return
+            }
             me.refresh()
         }
     }
     
-    func addInfiniteScrolling(tableView: UITableView) {
-        let footer = ESRefreshFooterAnimator.init(frame: CGRect.zero)
-        tableView.es.addInfiniteScrolling(animator: footer) { [weak self] in
-            guard let me = self else { return }
-            me.tableView = tableView
+    func addInfiniteScrolling() {
+        tableView.es.addInfiniteScrolling { [weak self] in
+            guard let me = self else {
+                return
+            }
             me.loadMore()
         }
     }
     
     func stopPullToRefresh() {
-        if let tableView = tableView {
-            tableView.es.stopPullToRefresh()
-        }
+        tableView.es.stopPullToRefresh()
     }
     
     func stopLoodMore() {
-        if let tableView = tableView {
-            tableView.es.stopLoadingMore()
-        }
+        tableView.es.stopLoadingMore()
     }
     
     func noticeNoMoreData() {
-        if let tableView = tableView {
-            tableView.es.noticeNoMoreData()
-        }
+        tableView.es.noticeNoMoreData()
     }
     
+    func reloadData() {
+        tableView.reloadData()
+    }
+    
+    /// This function need to implement to handle refresh data
     func refresh() {
 
     }
     
+    /// This function need to implement to handle load more data
     func loadMore() {
         
     }

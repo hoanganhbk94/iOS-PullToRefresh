@@ -9,17 +9,16 @@
 import UIKit
 
 class ViewController: BaseTableViewController {
-    private var currentPage: Int = 0
-    private var itemsArray: [String] = []
-    
-    @IBOutlet weak var tableView: UITableView!
+    private var _currentPage: Int = 0
+    private var _isRequest: Bool = false
+    private var _isLoadMore: Bool = false
+    private var items: [String] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
-        addPullToRefresh(tableView: tableView)
-        addInfiniteScrolling(tableView: tableView)
+        getDataFromServer()
     }
 
     override func didReceiveMemoryWarning() {
@@ -27,39 +26,59 @@ class ViewController: BaseTableViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    override func refresh() {
+    private func getDataFromServer() {
+        if _isRequest {
+            return
+        }
+        _isRequest = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
-            guard let me = self else { return }
-            me.currentPage = 0
-            me.itemsArray.removeAll()
-            for _ in 0..<10 {
-                me.itemsArray.append("")
+            guard let weakSelf = self else {
+                return
             }
-            me.tableView.reloadData()
-            me.stopPullToRefresh()
+            /// API process
+            var resultItems: [String] = []
+            var endLoadMore = false
+            if weakSelf._currentPage < 3 {
+                for _ in 0 ..< 10 {
+                    resultItems.append("")
+                }
+                endLoadMore = false
+            } else {
+                endLoadMore = true
+            }
+            
+            if weakSelf._isLoadMore {
+                weakSelf.items.append(contentsOf: resultItems)
+            } else {
+                weakSelf.items.removeAll()
+                weakSelf.items = resultItems
+            }
+            weakSelf._currentPage += 1
+            weakSelf._isRequest = false
+            weakSelf._isLoadMore = true
+            weakSelf.stopPullToRefresh()
+            weakSelf.stopLoodMore()
+            weakSelf.reloadData()
+            if endLoadMore {
+                weakSelf.noticeNoMoreData()
+            }
         }
     }
     
+    override func refresh() {
+        _isLoadMore = false
+        _currentPage = 0
+        getDataFromServer()
+    }
+    
     override func loadMore() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [weak self] in
-            guard let me = self else { return }
-            if me.currentPage < 2 {
-                me.currentPage += 1
-                for _ in 0..<10 {
-                    me.itemsArray.append("")
-                }
-                me.tableView.reloadData()
-               me.stopLoodMore()
-            } else {
-                me.noticeNoMoreData()
-            }
-        }
+        getDataFromServer()
     }
     
     // MARK: - Tableview datasource
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return itemsArray.count
+        return items.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
