@@ -14,6 +14,7 @@
 		5B88422F205968CE0055389B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B88422E205968CE0055389B /* Assets.xcassets */; };
 		5B884232205968CE0055389B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5B884230205968CE0055389B /* LaunchScreen.storyboard */; };
 		5B88423A205972A00055389B /* BaseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B884239205972A00055389B /* BaseTableViewController.swift */; };
+		BD7A02E720EB8EB70051D7C8 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BD7A02E620EB8EB70051D7C8 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		5B884231205968CE0055389B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		5B884233205968CE0055389B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5B884239205972A00055389B /* BaseTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewController.swift; sourceTree = "<group>"; };
+		BD7A02E620EB8EB70051D7C8 /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +72,7 @@
 				5B88422E205968CE0055389B /* Assets.xcassets */,
 				5B884230205968CE0055389B /* LaunchScreen.storyboard */,
 				5B884233205968CE0055389B /* Info.plist */,
+				BD7A02E620EB8EB70051D7C8 /* Localizable.strings */,
 			);
 			path = Demo04;
 			sourceTree = "<group>";
@@ -154,6 +157,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5B884232205968CE0055389B /* LaunchScreen.storyboard in Resources */,
+				BD7A02E720EB8EB70051D7C8 /* Localizable.strings in Resources */,
 				5B88422F205968CE0055389B /* Assets.xcassets in Resources */,
 				5B88422D205968CE0055389B /* Main.storyboard in Resources */,
 			);

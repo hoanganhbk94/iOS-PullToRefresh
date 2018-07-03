@@ -24,20 +24,14 @@ class BaseTableViewController: UIViewController, UITableViewDataSource, UITableV
     }
     
     func addPullToRefresh() {
-        tableView.es.addPullToRefresh { [weak self] in
-            guard let me = self else {
-                return
-            }
-            me.refresh()
+        tableView.es.addPullToRefresh { [unowned self] in
+            self.refresh()
         }
     }
     
     func addInfiniteScrolling() {
-        tableView.es.addInfiniteScrolling { [weak self] in
-            guard let me = self else {
-                return
-            }
-            me.loadMore()
+        tableView.es.addInfiniteScrolling { [unowned self] in
+            self.loadMore()
         }
     }
     

@@ -55,7 +55,6 @@ class ViewController: BaseTableViewController {
             }
             weakSelf._currentPage += 1
             weakSelf._isRequest = false
-            weakSelf._isLoadMore = true
             weakSelf.stopPullToRefresh()
             weakSelf.stopLoodMore()
             weakSelf.reloadData()
@@ -72,6 +71,7 @@ class ViewController: BaseTableViewController {
     }
     
     override func loadMore() {
+        _isLoadMore = true
         getDataFromServer()
     }
     
